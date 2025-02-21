@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8/3 - Dành cho Em</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         body {
+            background-color: #ffe6f0;
+            font-family: 'Arial', sans-serif;
             text-align: center;
-            background-color: #ffebf0;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            margin-top: 50px;
         }
         .heart {
             color: red;
@@ -23,53 +22,50 @@
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
-        .button {
-            padding: 10px 20px;
-            font-size: 18px;
-            margin: 10px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
+        .no:hover {
+            position: absolute;
         }
-        .yes { background-color: #ff4d4d; color: white; }
-        .no { background-color: gray; color: white; position: relative; }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Em có yêu anh không? ❤️</h1>
-        <button class="button yes" onclick="showLoveMessage()">Yes</button>
-        <button class="button no" onmouseover="moveNoButton()">No</button>
+<body class="flex flex-col items-center justify-center h-screen">
+    <div class="container bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold">Em có yêu anh không? ❤️</h1>
+        <div class="mt-4">
+            <button class="yes bg-red-500 text-white px-4 py-2 rounded-lg mr-2" onclick="showLoveMessage()">Yes</button>
+            <button class="no bg-gray-400 text-white px-4 py-2 rounded-lg" onmouseover="moveNoButton()">No</button>
+        </div>
     </div>
 
     <audio id="romanticMusic" src="https://www.mfiles.co.uk/mp3-downloads/Titanic-My-Heart-Will-Go-On.mp3" loop></audio>
     
     <script>
         function showLoveMessage() {
-            document.body.innerHTML = `<h1>Yêu em nhiều lắm ❤️</h1>
-                                       <p>Chúc em ngày 8/3 thật vui vẻ!</p>
-                                       <div class='heart'>&#10084;</div>
-                                       <button onclick="showForm()">Tiếp tục</button>`;
+            document.body.innerHTML = `<div class='flex flex-col items-center justify-center h-screen'>
+                                            <h1 class='text-3xl font-bold text-red-600'>Yêu em nhiều lắm ❤️</h1>
+                                            <p class='text-lg mt-2'>Chúc em ngày 8/3 thật vui vẻ!</p>
+                                            <div class='heart'>&#10084;</div>
+                                            <button class='mt-4 px-4 py-2 bg-pink-500 text-white rounded-lg' onclick='showForm()'>Tiếp tục</button>
+                                        </div>`;
             document.getElementById("romanticMusic").play();
         }
 
         function moveNoButton() {
             let noButton = document.querySelector(".no");
-            let x = Math.random() * window.innerWidth * 0.6;
-            let y = Math.random() * window.innerHeight * 0.6;
-            noButton.style.position = "absolute";
-            noButton.style.left = x + "px";
-            noButton.style.top = y + "px";
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 50);
+            gsap.to(noButton, { x: x, y: y, duration: 0.5 });
         }
 
         function showForm() {
-            document.body.innerHTML = `<h1>Hãy chọn một kế hoạch cho ngày 8/3</h1>
-                                       <form>
-                                           <label>Chọn món ăn: <input type='text' name='food'></label><br>
-                                           <label>Địa điểm vui chơi: <input type='text' name='place'></label><br>
-                                           <label>Thời gian: <input type='time' name='time'></label><br>
-                                           <button type='submit'>Xác nhận</button>
-                                       </form>`;
+            document.body.innerHTML = `<div class='flex flex-col items-center justify-center h-screen'>
+                                            <h1 class='text-2xl font-bold'>Hãy chọn một kế hoạch cho ngày 8/3</h1>
+                                            <form class='mt-4 space-y-3'>
+                                                <input class='border p-2 rounded w-64' type='text' name='food' placeholder='Chọn món ăn'><br>
+                                                <input class='border p-2 rounded w-64' type='text' name='place' placeholder='Địa điểm vui chơi'><br>
+                                                <input class='border p-2 rounded w-64' type='time' name='time'><br>
+                                                <button class='px-4 py-2 bg-green-500 text-white rounded-lg' type='submit'>Xác nhận</button>
+                                            </form>
+                                        </div>`;
         }
     </script>
 </body>
